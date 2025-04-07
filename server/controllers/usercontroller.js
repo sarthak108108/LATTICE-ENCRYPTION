@@ -1,13 +1,13 @@
-import { User } from "../models/usermodel.js";
+import { User_ce } from "../models/usermodel.js";
 
 exports.register = async (req, res) => {
   const { username } = req.body;
   const public_key = "sample";
   try {
-    let user = await User.findOne({ username });
+    let user = await User_ce.findOne({ username });
     if (user) return res.status(400).json({ message: "User already exists" });
 
-    user = new User({ username, public_key });
+    user = new User_ce({ username, public_key });
     await user.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
@@ -23,7 +23,7 @@ exports.login = async (req, res) => {
   const { username } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User_ce.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Generate loginKey and save to DB
@@ -48,7 +48,7 @@ exports.logout = async (req, res) => {
   const { username } = req.body;
 
   try {
-    const user = await User.findOne({ username });
+    const user = await User_ce.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Remove loginKey from database
@@ -71,7 +71,7 @@ exports.logout = async (req, res) => {
 exports.getUserPublicKey = async (req, res) => {
   const { username } = req.params;
   try {
-    const user = await User.findOne({ username });
+    const user = await User_ce.findOne({ username });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     res.status(200).json({ publicKey: user.public_key });
