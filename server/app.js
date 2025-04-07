@@ -2,7 +2,7 @@ import express from "express"
 import cookieParser from "cookie-parser";
 const mongoose = require("mongoose");
 const cors = require("cors");
-const messageRoutes = require("./routes/messageroutes.js");
+const chatRoutes = require("./routes/chatroutes.js");
 const userRoutes = require("./routes/userroutes.js");
 require("dotenv").config();
 
@@ -20,7 +20,7 @@ mongoose.connect(process.env.DB_URL, {
 }).then(() => console.log("Connected to MongoDB Atlas"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-app.use("/api/messages", messageRoutes);
+app.use("/api/messages", chatRoutes);
 app.use("/api/users", userRoutes);
 
 const PORT = process.env.PORT || 3000;
